@@ -28,6 +28,7 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="http://<?php echo ROOT_URL;?>img/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="96x96" href="http://<?php echo ROOT_URL;?>img/favicon-96x96.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="http://<?php echo ROOT_URL;?>img/favicon-16x16.png">
+		
 		<link rel="manifest" href="http://<?php echo ROOT_URL;?>img/manifest.json">
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="http://<?php echo ROOT_URL;?>img/ms-icon-144x144.png">
@@ -100,6 +101,6 @@
 		$body_class = 'nav-md';
 	}*/
 	?>
-	<body class="<?php //echo $body_class?>">
+	<body class="nav-md<?php //echo $body_class?>">
         <div class="container body">
 			<div class="main_container">
