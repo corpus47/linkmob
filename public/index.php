@@ -12,9 +12,7 @@ require_once('..' . DIRECTORY_SEPARATOR . 'protected' . DIRECTORY_SEPARATOR . 'c
 
 $req = explode('/', $_SERVER['REQUEST_URI']);
 
-//var_dump($_SERVER['HTTP_HOST']);
-
-$app = new App($config);
+$app = new App();
 
 $app::run();
 

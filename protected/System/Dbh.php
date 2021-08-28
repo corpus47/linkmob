@@ -4,13 +4,13 @@ namespace System;
 
 use \PDO;
 
-class Dbh extends BaseClass {
+class Dbh {
 	
 	private static $instance = NULL;
 
-	private static $log;
+	public static $dbh = NULL;
 
-	public function __construct($config = NULL) {
+	private function __construct($config = NULL) {
 
 		$dsn = "mysql:host=" . $config['database']['host'].";dbname=" . $config['database']['db'];
 
@@ -33,10 +33,14 @@ class Dbh extends BaseClass {
  
     }
 
-    public function get_dbh() {
+    public static function getInstance($config = NULL) {
 
-    	return self::$dbh;	
-
-    }
+		if ( is_null( self::$instance ) )
+	    {
+	      self::$instance = new Dbh($config);
+	    }
+	    return self::$instance;
+		
+	}
 
 }

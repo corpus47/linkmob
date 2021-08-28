@@ -2,16 +2,23 @@
 
 namespace System;
 
-class Render extends \System\BaseClass {
+use System\Dbh;
+
+class Render {
+
+    private $dbh = NULL;
 
     public function __construct($config = NULL,$action = NULL) {
 
-       $this->dbh = new \System\Dbh($config);
+       $this->dbh = Dbh::getInstance($config)::$dbh;
 
     }
 
-    public static function dump($action = NULL) {
-        var_dump($action);exit;
+    public function dump($action = NULL) {
+        var_dump($action);
+        $dbh = $this->dbh;
+        var_export($dbh);
+        exit;
     }
 
 }

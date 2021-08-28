@@ -1,21 +1,22 @@
 <?php
 
-class App extends \System\BaseClass {
+use System\Dbh;
+use System\Config;
+
+class App {
 
 	private static $config;
 
 	private static $emails;
 
-	//private static $dbh = NULL;
+	private $dbh = NULL;
 
 	private static $action = 'default';
 
 
-	public function __construct($config = NULL) {
+	public function __construct() {
 
-        //parent::getInstance();
-
-        self::$config = $config;
+		self::$config = Config::getInstance()::$config;
 
         self::$config['live'] = LIVE;
 
@@ -25,7 +26,11 @@ class App extends \System\BaseClass {
 
 		//self::$config['email'] = new Components\Emails(self::$config);
 
-		//self::$dbh = new System\Dbh(self::$config);
+		$this->dbh = Dbh::getInstance(self::$config)::$dbh;
+
+		var_dump($this->dbh);
+
+		var_dump(Config::getInstance()::$config);
 
 
 		//self::$config['log']->log_to_file('Application run');
