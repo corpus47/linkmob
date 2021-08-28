@@ -9,11 +9,11 @@ class SessionHandler implements \SessionHandlerInterface {
 
 	private static $instance = NULL;
 
+	private static $sessions;
+
     private function __construct() {
 
-		$sessions = new Sessions();
-
-		$sessions->deleteByWhere();
+		self::$sessions = new Sessions();
 
     } 
 
@@ -29,10 +29,15 @@ class SessionHandler implements \SessionHandlerInterface {
 
 	public function open($save_path,$session_name) {
 
+		$limit = time() - (3600 * 24);
+
+		self::$sessions->addParam('timestamp','<', time());
+
+		return self::$sessions->deleteByWhere();
 	}
 
 	public function close() {
-
+		return '';
 	}
 
 	public function read($key) {
