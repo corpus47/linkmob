@@ -127,9 +127,9 @@ class Table {
 
     }
 
-    public function findById($pk = NULL) {
+    public function findById($id = NULL, $fields = array()) {
 
-        if($pk == NULL) {
+        if($id == NULL) {
             return false;
         }
 
