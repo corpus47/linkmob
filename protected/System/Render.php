@@ -17,8 +17,8 @@ class Render {
     public function dump($action = NULL) {
         var_dump($action);
         $dbh = $this->dbh;
-        var_export($dbh);
-        exit;
+        //var_export($dbh);
+        //exit;
     }
 
 }

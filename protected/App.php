@@ -2,6 +2,8 @@
 
 use System\Dbh;
 use System\Config;
+use System\SessionHandler;
+use System\Table;
 
 class App {
 
@@ -16,9 +18,13 @@ class App {
 
 	public function __construct() {
 
+		SessionHandler::getInstance();
+
 		self::$config = Config::getInstance()::$config;
 
         self::$config['live'] = LIVE;
+
+		$table = new Table;
 
 		//self::$config['log'] = new Components\Logs(self::$config);
 
@@ -28,9 +34,9 @@ class App {
 
 		$this->dbh = Dbh::getInstance(self::$config)::$dbh;
 
-		var_dump($this->dbh);
+		//var_dump($this->dbh);
 
-		var_dump(Config::getInstance()::$config);
+		//var_dump(Config::getInstance()::$config);
 
 
 		//self::$config['log']->log_to_file('Application run');
@@ -48,6 +54,8 @@ class App {
 		$render = new System\Render(self::$config,self::$action);
 
 		$render->dump(self::$action);
+		
+		exit;
 
 		// Load header
 
