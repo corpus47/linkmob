@@ -6,13 +6,14 @@ class App extends \System\BaseClass {
 
 	private static $emails;
 
-	private static $dbh = NULL;
+	//private static $dbh = NULL;
 
 	private static $action = 'default';
 
+
 	public function __construct($config = NULL) {
 
-        parent::getInstance();
+        //parent::getInstance();
 
         self::$config = $config;
 
@@ -24,7 +25,7 @@ class App extends \System\BaseClass {
 
 		//self::$config['email'] = new Components\Emails(self::$config);
 
-		self::$dbh = new System\Dbh(self::$config);
+		//self::$dbh = new System\Dbh(self::$config);
 
 
 		//self::$config['log']->log_to_file('Application run');
@@ -38,6 +39,10 @@ class App extends \System\BaseClass {
 	}
 
 	private static function view() {
+
+		$render = new System\Render(self::$config,self::$action);
+
+		$render->dump(self::$action);
 
 		// Load header
 

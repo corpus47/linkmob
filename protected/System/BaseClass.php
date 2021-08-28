@@ -4,13 +4,15 @@ namespace System;
 
 class BaseClass {
 
-	private static $instance = NULL;
+	public $dbh = NULL;
+
 
 	public function __construct() {
 
+		
 	}
 	
-	public static function getInstance() {
+	/*public static function getInstance() {
 
 		if ( is_null( self::$instance ) )
 	    {
@@ -18,6 +20,6 @@ class BaseClass {
 	    }
 	    return self::$instance;
 		
-	}
+	}*/
 
 }

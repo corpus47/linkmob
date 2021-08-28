@@ -8,13 +8,9 @@ class Dbh extends BaseClass {
 	
 	private static $instance = NULL;
 
-	private static $dbh = NULL;
-
 	private static $log;
 
 	public function __construct($config = NULL) {
-
-		parent::getInstance();
 
 		$dsn = "mysql:host=" . $config['database']['host'].";dbname=" . $config['database']['db'];
 
