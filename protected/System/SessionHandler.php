@@ -15,12 +15,15 @@ class SessionHandler implements \SessionHandlerInterface {
 
 		self::$sessions = new Sessions();
 
+		var_dump(self::$sessions->findById(2));
+
+		exit;
+
     } 
 
     public static function getInstance($config = NULL) {
 
-		if ( is_null( self::$instance ) )
-	    {
+		if ( is_null( self::$instance ) ) {
 	      self::$instance = new SessionHandler();
 	    }
 	    return self::$instance;
@@ -42,10 +45,21 @@ class SessionHandler implements \SessionHandlerInterface {
 
 	public function read($key) {
 
+		$res = self::$sessions->findById($key);
+
+		if($res !== false) {
+			return (string)$res['data'];
+		} else {
+			return false;
+		}
+
+
 	}
 
 	public function write($key,$val) {
 
+
+		self::$sessions->replaceInto();
 	}
 
 	public function destroy($key) {

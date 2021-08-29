@@ -18,10 +18,17 @@ class Table {
 
 
     public function __construct() {
+        
+        $this->init();
+    }
+
+    public function init() {
 
         $this->config = Config::getInstance()::$config;
 
         $this->dbh = Dbh::getInstance($this->config)::$dbh;
+
+        echo __CLASS__;
 
     }
 
@@ -64,7 +71,7 @@ class Table {
             $sql = 'DELETE FROM ' . $this->table_name . $this->makewhere();
 
             $sth = $this->dbh->prepare($sql);
-
+            //var_dump($sql);exit;
             foreach($this->sql_params as $params) {
                 $param = ':' . $params[0];
                 $sth->bindParam($param,$params[2]);
@@ -136,15 +143,40 @@ class Table {
 
     }
 
-    public function findById($id = NULL, $fields = array()) {
+    public function findById($id = NULL) {
 
         if($id == NULL) {
             return false;
         }
+        $this->addParam('id','=',$id);
+        $sql = "SELECT * FROM " . $this->GetTableName() . $this->makewhere();
+        $sth = $this->dbh->prepare($sql);
+        foreach($this->sql_params as $params) {
+            $param = ':' . $params[0];
+            $sth->bindParam($param,$params[2]);
+        }
+        try{
+
+            $sth->execute();
+
+        } catch(\PDOException $ex) {
+            die($ex->getMessage());
+        }
+
+        return $sth->fetch();
 
     }
 
     public function getRows($attr = array()) {
+
+    }
+
+    /*
+    * Replace into implementation
+    *
+    * @param array $attr
+    */
+    public function replaceInto($attr = NULL) {
 
     }
 
