@@ -16,6 +16,7 @@ class Table {
 
     public $sql_params = array();
 
+
     public function __construct() {
 
         $this->config = Config::getInstance()::$config;
@@ -61,7 +62,7 @@ class Table {
         } else {
 
             $sql = 'DELETE FROM ' . $this->table_name . $this->makewhere();
-            var_dump($sql);
+
             $sth = $this->dbh->prepare($sql);
 
             foreach($this->sql_params as $params) {
@@ -84,7 +85,15 @@ class Table {
     private function error($message = '') {
         die($message . ' - ' . __CLASS__ . ' - ' . __FUNCTION__);
     }
-    
+
+    /**
+    * Make sql string
+    *
+    * @param boolean $or
+    * @param integer $limit  
+    * @param string  $orderby ordered field name
+    *
+    */
     private function makewhere($or = FALSE, $limit = NULL, $orderby = NULL) {
 
         $where = " WHERE";
