@@ -9,26 +9,13 @@ class Sessions extends Table {
 
     public function __construct() {
 
-        //parent::__construct();
+        parent::__construct();
 
-        $this->init();
+        echo $this->TableName();
 
-        //echo __CLASS__;
+        //var_dump($this->SetFields());
 
-        $this->SetTableName('sessions');
         
     }
-
-    public function SetFields() {
-
-        $this->fields = array(
-                                'id',
-                                'timestamp',
-                                'data');
-
-    }
-
-
-
 
 }

@@ -6,8 +6,6 @@ use System\Dbh;
 
 class Table {
 
-    protected $table_name = NULL;
-
     public $config = NULL;
 
     public $dbh = NULL;
@@ -18,31 +16,37 @@ class Table {
 
 
     public function __construct() {
-        
-        $this->init();
-    }
-
-    public function init() {
 
         $this->config = Config::getInstance()::$config;
 
         $this->dbh = Dbh::getInstance($this->config)::$dbh;
 
-        echo __CLASS__;
+        $this->SetFields();
 
     }
 
-    public function SetTableName($name) {
+    public function TableName() {
 
-        $this->table_name = $name;
+        $path = explode('\\',strtolower(get_class($this)));
 
-    }
-
-    public function GetTableName() {
-        return $this->table_name;
+        return array_pop($path);
     }
 
     public function SetFields() {
+
+        try {
+            $sql = "DESCRIBE " . $this->TableName();
+
+            $sth = $this->dbh->prepare($sql);
+
+            $sth->execute();
+
+        } catch(\PDOException $ex) {
+
+            die($ex->getMessage());
+        }
+
+        echo '<pre>';var_export($sth->fetchAll());echo '</ pre>';
 
     }
 
@@ -68,7 +72,7 @@ class Table {
             $this->error('Nincsenek paraméterek');
         } else {
 
-            $sql = 'DELETE FROM ' . $this->table_name . $this->makewhere();
+            $sql = 'DELETE FROM ' . $this->TableName() . $this->makewhere();
 
             $sth = $this->dbh->prepare($sql);
             //var_dump($sql);exit;
@@ -149,7 +153,7 @@ class Table {
             return false;
         }
         $this->addParam('id','=',$id);
-        $sql = "SELECT * FROM " . $this->GetTableName() . $this->makewhere();
+        $sql = "SELECT * FROM " . $this->TableName() . $this->makewhere();
         $sth = $this->dbh->prepare($sql);
         foreach($this->sql_params as $params) {
             $param = ':' . $params[0];
