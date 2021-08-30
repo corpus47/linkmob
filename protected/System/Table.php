@@ -210,6 +210,10 @@ class Table extends BaseClass{
     */
     public function replaceInto($attr = NULL) {
 
+        if(is_array($attr)) {
+            
+        }
+
     }
 
     public function addParam($name = NULL, $condition = NULL, $value = NULL) {

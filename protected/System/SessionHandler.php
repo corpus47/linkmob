@@ -15,9 +15,9 @@ class SessionHandler implements \SessionHandlerInterface {
 
 		self::$sessions = new Sessions();
 
-		var_dump(self::$sessions->findById(2));
+		//var_dump(self::$sessions->findById(2));
 
-		exit;
+		//exit;
 
     } 
 
