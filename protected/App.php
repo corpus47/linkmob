@@ -4,8 +4,9 @@ use System\Dbh;
 use System\Config;
 use System\SessionHandler;
 use System\Table;
+use System\BaseClass;
 
-class App {
+class App extends BaseClass {
 
 	private static $config;
 

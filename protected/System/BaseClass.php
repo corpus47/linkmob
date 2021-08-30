@@ -4,22 +4,23 @@ namespace System;
 
 class BaseClass {
 
-	public $dbh = NULL;
-
 
 	public function __construct() {
 
 		
 	}
-	
-	/*public static function getInstance() {
 
-		if ( is_null( self::$instance ) )
-	    {
-	      self::$instance = new BaseClass();
-	    }
-	    return self::$instance;
-		
-	}*/
+	/*
+	*
+	* @param string $method method name
+	* $param mixed  $ex     PDO exeption
+	*/
+	public function dump_error($method,$ex){
+
+		die("Error: -> " . $method . " " . $ex->getMessage());
+
+		exit(-1);
+
+	}
 
 }

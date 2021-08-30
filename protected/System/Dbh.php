@@ -3,8 +3,9 @@
 namespace System;
 
 use \PDO;
+use System\BaseClass;
 
-class Dbh {
+class Dbh extends BaseClass{
 	
 	private static $instance = NULL;
 
@@ -21,13 +22,15 @@ class Dbh {
 
         } catch(\PDOException $ex) {
 
-        	$config['log']->log_to_file('Dbh error: ' . $ex->getMessage());
+        	//$config['log']->log_to_file('Dbh error: ' . $ex->getMessage());
 
         	//$config['email']->alert_email('Dbh error: ' . $ex->getMessage());
 
-            die('System halted!');
+            //die('System halted! ->' . __METHOD__ . " " . $ex->getMessage());
 
-            exit;
+            //exit;
+
+			$this->dump_error(__METHOD__,$ex);
 
         }
  

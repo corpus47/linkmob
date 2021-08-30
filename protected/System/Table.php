@@ -3,8 +3,9 @@
 namespace System;
 
 use System\Dbh;
+use System\BaseClass;
 
-class Table {
+class Table extends BaseClass{
 
     public $config = NULL;
 
@@ -21,7 +22,7 @@ class Table {
 
         $this->dbh = Dbh::getInstance($this->config)::$dbh;
 
-        $this->SetFields();
+        /* $this->SetFields(); */
 
     }
 
@@ -43,7 +44,8 @@ class Table {
 
         } catch(\PDOException $ex) {
 
-            die($ex->getMessage());
+            //die($ex->getMessage());
+            $this->dump_error(__METHOD__,$ex);
         }
 
         echo '<pre>';var_export($sth->fetchAll());echo '</ pre>';
@@ -66,22 +68,22 @@ class Table {
 
     }
 
-    public function deleteByWhere(){
+    public function deleteByWhere(): bool {
 
         if(count($this->sql_params) == 0) {
             $this->error('Nincsenek paraméterek');
         } else {
 
-            $sql = 'DELETE FROM ' . $this->TableName() . $this->makewhere();
+             try {
+                 $sql = 'DELETE FROM ' . $this->TableName() . $this->makewhere();
 
-            $sth = $this->dbh->prepare($sql);
-            //var_dump($sql);exit;
-            foreach($this->sql_params as $params) {
-                $param = ':' . $params[0];
-                $sth->bindParam($param,$params[2]);
-            }
+                 $sth = $this->dbh->prepare($sql);
 
-            try{
+                /*foreach($this->sql_params as $params) {
+                    $param = ':' . $params[0];
+                    $sth->bindParam($param,$params[2]);
+                }*/
+                $this->fetchParams($sth);
 
                 return $sth->execute();
 
@@ -147,7 +149,30 @@ class Table {
 
     }
 
-    public function findById($id = NULL) {
+    /*
+    *
+    * @param object $th an PDO sth
+    *
+    */
+
+    public function fetchParams($sth = NULL): bool  {
+
+        if(!empty($this->sql_params) && is_object($sth)) {
+
+            foreach($this->sql_params as $params) {
+                $param = ':' . $params[0];
+                $sth->bindParam($param,$params[2]);
+            }
+            $this->sql_params = array();
+
+
+        }
+
+        return true;
+
+    }
+
+    public function findById($id = NULL): array {
 
         if($id == NULL) {
             return false;
@@ -155,19 +180,22 @@ class Table {
         $this->addParam('id','=',$id);
         $sql = "SELECT * FROM " . $this->TableName() . $this->makewhere();
         $sth = $this->dbh->prepare($sql);
-        foreach($this->sql_params as $params) {
+
+        /*foreach($this->sql_params as $params) {
             $param = ':' . $params[0];
             $sth->bindParam($param,$params[2]);
-        }
+        }*/
+        $this->fetchParams($sth);
         try{
 
             $sth->execute();
 
         } catch(\PDOException $ex) {
-            die($ex->getMessage());
+            //die($ex->getMessage());
+            $this->dump_error(__METHOD__,$ex);
         }
 
-        return $sth->fetch();
+        return $sth->fetchAll();
 
     }
 
